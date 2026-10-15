@@ -1,0 +1,59 @@
+# GH Pages do jalep-v2 — build estático Next.js (BUILD_MODE=static) e deploy.
+# NÃO usa o basePath /jalep-mano: este repo publica no PRÓPRIO Pages do jalep-v2,
+# servido em https://sudoxddx.github.io/jalep-v2/ (baseUrl do projeto raiz).
+name: Deploy static site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Prisma client precisa existir pro build (mesmo sem DB no modo estático)
+      - name: Generate Prisma Client
+        run: npx prisma generate || true
+
+      - name: Build static export
+        env:
+          BUILD_MODE: static
+          # basePath do jalep-v2 (repo próprio, não o jalep-mano)
+          NEXT_BASE_PATH: /jalep-v2
+        run: |
+          npm ci
+          npm run build:static
+          touch out/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
