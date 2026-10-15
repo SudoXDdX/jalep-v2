@@ -1,0 +1,50 @@
+▲ Next.js 16.3.5 (webpack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.111:3000
+- Environments: .env
+✓ Ready in 1657ms
+⚠ Warning: Next.js ignored package-lock.json in /data/data/com.termux/files/home because it is outside the current Git repository (/data/data/com.termux/files/home/jalep-v2).
+ To use this directory, set `outputFileTracingRoot` in your Next.js config.
+
+✓ Running next.config.ts took 582ms
+  Skipping creating a lockfile at /data/data/com.termux/files/home/jalep-v2/.next/dev/lock because we're using WASM bindings
+It looks like you're trying to use TypeScript but do not have the required package(s) installed.
+Installing dependencies
+
+If you are not trying to use TypeScript, please remove the tsconfig.json file from your package root (and any TypeScript files in your app and pages directories).
+
+
+Installing devDependencies (npm):
+- @types/node
+
+
+added 2 packages, and audited 395 packages in 22s
+
+150 packages are looking for funding
+  run `npm fund` for details
+
+11 vulnerabilities (10 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm warn install-scripts 3 packages have install scripts not yet covered by allowScripts:
+npm warn install-scripts   @prisma/client@6.19.3 (postinstall: node scripts/postinstall.js)
+npm warn install-scripts   @prisma/engines@6.19.3 (postinstall: node scripts/postinstall.js)
+npm warn install-scripts   esbuild@0.28.2 (postinstall: node install.js)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+
+- Experiments (use with caution):
+  · serverActions
+
+✓ Generated AGENTS.md and CLAUDE.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /_not-found ...
+ GET /api/health 404 in 233ms (next.js: 26ms, application-code: 207ms)
+ GET / 404 in 149ms (next.js: 13ms, application-code: 136ms)
+ GET /api/health 200 in 1168ms (next.js: 1113ms, application-code: 55ms)
+ POST /api/ai 200 in 80s (next.js: 607ms, application-code: 79s)

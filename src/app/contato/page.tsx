@@ -18,25 +18,21 @@ export default function ContatoPage() {
     e.preventDefault();
     setSubmitted(true);
 
-    const _k = (typeof window !== 'undefined' && (window as any).__JALEP_GK) || '';
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${_k}`;
-
+    /* IA via backend same-origin /api/ai (proxy server-side NVIDIA NIM, z-ai/glm-5.3-flash).
+       Key no .env do servidor — nunca no client. */
     const systemPrompt = `Você é o assistente da JALEP Corporação. Responda em português brasileiro, de forma profissional mas acolhedora. Confirme o recebimento da mensagem, ofereça ajuda e mencione que a equipe retornará em até 24h. Se a mensagem parecer um pedido de orçamento, sugira usar o simulador de orçamento no site. Contato: +55 19 99486-4845 | contato@jalep.tech`;
 
     const userPrompt = `Nome: ${form.nome}\nEmail: ${form.email}\nMensagem: ${form.mensagem}`;
 
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch("/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: userPrompt }] }],
-          systemInstruction: { parts: [{ text: systemPrompt }] },
-        }),
+        body: JSON.stringify({ systemPrompt, userPrompt, maxTokens: 1024 }),
       });
       if (res.ok) {
         const data = await res.json();
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        const text = data.text || "";
         setAiResponse(text || "Mensagem recebida! Nossa equipe retornará em breve.");
       } else {
         setAiResponse("Mensagem recebida com sucesso! Nossa equipe analisará e retornará em até 24 horas úteis. Para respostas rápidas, entre em contato pelo WhatsApp: +55 19 99486-4845");

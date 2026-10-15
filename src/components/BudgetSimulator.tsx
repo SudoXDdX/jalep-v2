@@ -7,9 +7,10 @@ import { ScrollReveal } from "@/components/ScrollReveal";
    CONSTANTS
    ═══════════════════════════════════════════ */
 
-/* Read API key dynamically (gk.js sets window.__JALEP_GK at runtime) */
-const getApiKey = () => (typeof window !== 'undefined' && (window as any).__JALEP_GK) || '';
-const getEndpoint = () => `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${getApiKey()}`;
+/* IA via backend same-origin /api/ai (proxy server-side NVIDIA NIM, z-ai/glm-5.3-flash).
+   A key NUNCA vai pro client — vive no .env do servidor. No export estático (GitHub Pages)
+   a rota não existe e o fallback de erro/WhatsApp cobre, igual antes. */
+const getAiEndpoint = () => "/api/ai";
 
 const SYSTEM_PROMPT = `Você é o assistente virtual da JALEP Corporação — Assistência Técnica Profissional, fundada em 2026 por estudantes do 7° Ano A em São Paulo.
 Sua função é gerar orçamentos simulados de upgrade, reparo e diagnóstico para notebooks, desktops e smartphones.
@@ -219,34 +220,28 @@ Por favor, forneça um orçamento estimado detalhado.`;
     const fullPrompt = `${SYSTEM_PROMPT}\n${userPrompt}`;
 
     try {
-      const apiKey = getApiKey();
-      if (!apiKey) {
-        throw new Error('API_KEY_MISSING');
-      }
-
-      const res = await fetch(getEndpoint(), {
+      const res = await fetch(getAiEndpoint(), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: fullPrompt }] }],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 2048,
-          },
+          systemPrompt: SYSTEM_PROMPT,
+          userPrompt: fullPrompt,
+          temperature: 0.7,
+          maxTokens: 2048,
         }),
       });
 
       if (!res.ok) {
         const errBody = await res.json().catch(() => null);
-        const errStatus = errBody?.error?.status || '';
-        if (errStatus === 'FAILED_PRECONDITION' || res.status === 400) {
-          throw new Error('REGION_BLOCKED');
+        const errCode = errBody?.error || '';
+        if (errCode === 'AI_NOT_CONFIGURED') {
+          throw new Error('API_KEY_MISSING');
         }
         throw new Error(`API error: ${res.status}`);
       }
 
       const data = await res.json();
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      const text = data?.text;
 
       if (!text) {
         throw new Error("Resposta vazia da IA");
@@ -255,9 +250,9 @@ Por favor, forneça um orçamento estimado detalhado.`;
       setResult(text);
     } catch (err: any) {
       const msg = err?.message || '';
-      if (msg === 'REGION_BLOCKED') {
+      if (msg.startsWith && msg.startsWith('API error: 4')) {
         setError(
-          "A API do Google Gemini não está disponível na sua região no momento. Isso é uma limitação do Google, não do site.\n\nMas calma — você ainda pode pedir seu orçamento manualmente pelo WhatsApp:"
+          "A IA do orçamento não está disponível no momento (servidor de IA fora do ar ou limite de requisições).\n\nMas calma — você ainda pode pedir seu orçamento manualmente pelo WhatsApp:"
         );
       } else if (msg === 'API_KEY_MISSING') {
         setError(
