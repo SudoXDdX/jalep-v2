@@ -6,3 +6,4 @@ dev.db-journal
 *.db
 .env
 .env.local
+.dev-logs/
