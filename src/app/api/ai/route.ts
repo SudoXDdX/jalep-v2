@@ -14,7 +14,10 @@ import { NextRequest, NextResponse } from "next/server";
  * Resp:  { text: string } | { error: string }
  */
 
-export const dynamic = "force-dynamic";
+/* Mesmo padrão das outras rotas (/api/budget, /api/contact): "force-static"
+ * deixa o build estático (output: export, GitHub Pages) passar sem reclamar
+ * de rota dinâmica; em server mode o POST executa normal em runtime. */
+export const dynamic = "force-static";
 
 const NIM_BASE = "https://integrate.api.nvidia.com/v1/chat/completions";
 const NIM_MODEL = "z-ai/glm-5.3-flash";
