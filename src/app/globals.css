@@ -751,6 +751,24 @@ html[data-mode] {
   --md-focus-ring-offset: 2px;
   --md-focus-ring-duration: 500ms;
   --md-shadow-color: var(--color-primary);
+
+  /* ═══ JALEP 3.0 — Motion Tokens (escala transitions-polish, por USO) ═══
+     Hover-in mais rápido que hover-out; open/close assimétricos;
+     stagger 40ms entre itens; distâncias pequenas (nada > ~40px fora drawer). */
+  --duration-stagger: 40ms;
+  --duration-micro: 80ms;      /* tooltip/path delay, shake */
+  --duration-quick: 150ms;     /* modal/dropdown CLOSE, tooltip appear */
+  --duration-fast: 250ms;      /* dropdown/modal OPEN, icon swap, page slide */
+  --duration-medium: 350ms;    /* panel/toast close */
+  --duration-slow: 400ms;      /* panel open, skeleton, hover-out */
+  --duration-very-slow: 500ms; /* badge appear, text reveal */
+  --ease-smooth-out: cubic-bezier(0.22,1,0.36,1); /* open/close/slide/resize default */
+  --ease-icon-swap: ease-in-out;
+  --ease-shimmer: linear;      /* shimmer, skeleton pulse, spinner */
+  --distance-text-swap: 4px;
+  --distance-page-slide: 8px;
+  --distance-text-reveal: 12px;
+  --distance-badge-appear: 30px;
 }
 
 /* ═══════════════════════════════════════════
@@ -965,14 +983,26 @@ html[data-mode] {
    ═══════════════════════════════════════════ */
 
 .scroll-reveal, .scroll-reveal-left, .scroll-reveal-scale, .scroll-reveal-blur {
-  opacity: 0; transition: opacity 700ms cubic-bezier(0.05,0.7,0.1,1), transform 700ms cubic-bezier(0.05,0.7,0.1,1), filter 700ms cubic-bezier(0.05,0.7,0.1,1);
+  opacity: 0;
+  /* JALEP 3.0: text reveal 500ms (duration-very-slow) + ease-smooth-out +
+     stagger 40ms via --reveal-index (CSS-driven, sem setTimeout) */
+  transition: opacity var(--duration-very-slow) var(--ease-smooth-out),
+              transform var(--duration-very-slow) var(--ease-smooth-out),
+              filter var(--duration-very-slow) var(--ease-smooth-out);
+  transition-delay: calc(var(--reveal-index, 0) * var(--duration-stagger));
 }
-.scroll-reveal { transform: translateY(28px); }
+.scroll-reveal { transform: translateY(var(--distance-text-reveal)); }
 .scroll-reveal-left { transform: translateX(-28px); }
 .scroll-reveal-scale { transform: scale(0.92); }
 .scroll-reveal-blur { filter: blur(8px); }
 
 .revealed { opacity: 1 !important; transform: none !important; filter: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal, .scroll-reveal-left, .scroll-reveal-scale, .scroll-reveal-blur {
+    transition-delay: 0ms !important;
+  }
+}
 
 /* ═══════════════════════════════════════════
    NAVBAR
@@ -1020,16 +1050,31 @@ html[data-mode] {
 
 .glass-card {
   background: var(--color-card); border: 1px solid var(--color-border);
-  border-radius: var(--radius); backdrop-filter: blur(12px) saturate(180%); -webkit-backdrop-filter: blur(12px) saturate(180%);
-  transition: background var(--dur-s2) var(--spring-soft), border-color var(--dur-s2) var(--spring-soft), box-shadow var(--dur-s2) var(--spring-soft);
+  border-radius: var(--radius);
+  /* JALEP 3.0: glass profundo — blur 20px, saturate 1.4, sombra 3-layer (ambient+mid+key) */
+  backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.18), 0 12px 32px rgba(0,0,0,0.22);
+  transition: background var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
+              border-color var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
+              box-shadow var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft));
+}
+.glass-card:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 6px 16px rgba(0,0,0,0.2),
+              0 16px 40px rgba(0,0,0,0.26),
+              0 0 24px color-mix(in srgb, var(--color-primary) 10%, transparent);
 }
 
 .neon-card {
   position: relative; background: var(--color-card);
   border: 1px solid var(--color-border); border-radius: var(--radius);
-  backdrop-filter: blur(12px) saturate(180%); -webkit-backdrop-filter: blur(12px) saturate(180%);
+  /* JALEP 3.0: glass profundo igual glass-card */
+  backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.18), 0 12px 32px rgba(0,0,0,0.22);
   padding: 1.5rem; overflow: hidden;
-  transition: border-color var(--dur-s2) var(--spring-soft), box-shadow var(--dur-s2) var(--spring-soft), transform var(--dur-s2) var(--spring-soft);
+  transition: border-color var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
+              box-shadow var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
+              transform var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft));
 }
 .neon-card::before {
   content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
@@ -1059,7 +1104,13 @@ html[data-mode] {
   background: var(--color-primary); color: var(--color-bg);
   font-family: var(--font-mono); font-size: 0.82rem; font-weight: 600;
   text-decoration: none; border: none;
-  transition: transform var(--dur-s2) var(--spring-interactive), box-shadow var(--dur-m1) var(--spring-soft), filter var(--dur-s2) var(--spring-interactive);
+  /* JALEP 3.0: hover-out lento (slow 400ms), hover-in rápido (fast 250ms via :hover) */
+  transition: transform var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
+              box-shadow var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
+              filter var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft));
+}
+.btn-primary:hover {
+  transition-duration: var(--duration-fast, 250ms), var(--duration-fast, 250ms), var(--duration-fast, 250ms);
 }
 .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 1px 3px 0px color-mix(in srgb, var(--color-primary) 30%, transparent), 0 4px 8px 3px color-mix(in srgb, var(--color-primary) 15%, transparent); filter: brightness(1.1); }
 .btn-primary:active { transform: translateY(0) scale(0.97); filter: brightness(0.95); transition-duration: var(--dur-xs); }

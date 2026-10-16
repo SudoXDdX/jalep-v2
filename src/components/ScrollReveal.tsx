@@ -24,11 +24,19 @@ export function ScrollReveal({ children, className = "", delay = 0, variant = "d
     if (perfMode === "low") { el.classList.add("revealed"); return; }
     if (!("IntersectionObserver" in window)) { el.classList.add("revealed"); return; }
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          if (delay > 0) { setTimeout(() => el.classList.add("revealed"), delay); }
-          else { el.classList.add("revealed"); }
-          observer.unobserve(el);
+      (entries, obs) => {
+        /* JALEP 3.0: stagger CSS-driven — o k-ésimo item do lote recebe
+           --reveal-index = k; o delay vive no CSS (transition-delay), não em
+           setTimeout. prefers-reduced-motion zera o delay no CSS. */
+        let k = 0;
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const target = entry.target as HTMLElement;
+            target.style.setProperty("--reveal-index", String(k++));
+            if (delay > 0) { setTimeout(() => target.classList.add("revealed"), delay); }
+            else { target.classList.add("revealed"); }
+            obs.unobserve(target);
+          }
         }
       },
       { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
