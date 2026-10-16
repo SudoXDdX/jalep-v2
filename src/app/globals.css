@@ -922,8 +922,10 @@ html[data-mode] {
 [data-perf="mid"] .wp-blob-4,
 [data-perf="mid"] .wp-blob-5,
 [data-perf="mid"] .wp-blob-6 { display: none !important; }
-[data-perf="mid"] .wallpaper-noise,
-[data-perf="mid"] .wallpaper-grid { display: none !important; }
+[data-perf="mid"] .wallpaper-noise { display: none !important; }
+/* JALEP 3.2: o grid FICA no mid — é o conteúdo estruturado que alimenta o
+   backdrop-blur dos cards (sem ele o glass não aparece). Linhas leves 7%. */
+[data-perf="mid"] .wallpaper-grid { display: block !important; }
 
 /* HIGH END: everything shown (default, no overrides needed) */
 

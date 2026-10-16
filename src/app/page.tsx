@@ -36,7 +36,7 @@ function useTypewriter(text: string, speed = 50, delay = 0) {
 function HeroSection() {
   const { displayed, done } = useTypewriter(site.hero.subtitle, 40, 600);
   return (
-    <section id="hero" className="relative z-[1] min-h-screen flex items-center justify-center px-6" style={{ paddingTop: "calc(var(--nav-h) + 2rem)" }}>
+    <section id="hero" className="relative z-auto min-h-screen flex items-center justify-center px-6" style={{ paddingTop: "calc(var(--nav-h) + 2rem)" }}>
       <div className="max-w-[1080px] w-full">
         <ScrollReveal>
           <div className="hero-tag mb-6">
@@ -97,7 +97,7 @@ function HeroSection() {
    ═══════════════════════════════════════════ */
 function ServicesSection() {
   return (
-    <section id="servicos" className="relative z-[1] py-24 px-6">
+    <section id="servicos" className="relative z-auto py-24 px-6">
       <div className="max-w-[1080px] mx-auto">
         <ScrollReveal>
           <p className="section-kicker">serviços</p>
@@ -140,7 +140,7 @@ function ServicesSection() {
    ═══════════════════════════════════════════ */
 function LabSection() {
   return (
-    <section id="lab" className="relative z-[1] py-24 px-6">
+    <section id="lab" className="relative z-auto py-24 px-6">
       <div className="max-w-[1080px] mx-auto">
         <ScrollReveal>
           <p className="section-kicker">laboratório</p>
@@ -192,7 +192,7 @@ function SpecsSection() {
   }, []);
 
   return (
-    <section id="specs" className="relative z-[1] py-24 px-6">
+    <section id="specs" className="relative z-auto py-24 px-6">
       <div className="max-w-[1080px] mx-auto" ref={ref}>
         <ScrollReveal>
           <p className="section-kicker">especificações</p>
@@ -241,7 +241,7 @@ function SpecsSection() {
    ═══════════════════════════════════════════ */
 function ManifestoSection() {
   return (
-    <section id="manifesto" className="relative z-[1] py-24 px-6">
+    <section id="manifesto" className="relative z-auto py-24 px-6">
       <div className="max-w-[720px] mx-auto">
         <ScrollReveal>
           <div className="quote-card">

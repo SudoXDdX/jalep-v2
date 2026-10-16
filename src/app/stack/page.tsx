@@ -101,7 +101,7 @@ export default function StackPage() {
       <ScrollProgress />
       <Nav />
 
-      <main className="relative z-[1] pt-24 pb-16 px-6" style={{ paddingTop: "calc(var(--nav-h, 60px) + 3rem)" }}>
+      <main className="relative z-auto pt-24 pb-16 px-6" style={{ paddingTop: "calc(var(--nav-h, 60px) + 3rem)" }}>
         <div className="max-w-[1080px] mx-auto">
           {/* Header */}
           <ScrollReveal>

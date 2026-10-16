@@ -283,7 +283,7 @@ Por favor, forneça um orçamento estimado detalhado.`;
      ═══════════════════════════════════════════ */
 
   return (
-    <section id="budget" className="relative z-[1] py-24 px-6">
+    <section id="budget" className="relative z-auto py-24 px-6">
       <div className="max-w-[640px] mx-auto">
         {/* ── Header ── */}
         <ScrollReveal>

@@ -19,7 +19,7 @@ export default function NotFound() {
   return (
     <>
 
-      <div className="fixed inset-0 z-[1] flex items-center justify-center px-6">
+      <div className="fixed inset-0 z-auto flex items-center justify-center px-6">
         <div className="text-center max-w-lg">
           {/* terminal-style error card */}
           <div className="glass-card p-8 md:p-12 text-left font-mono text-sm">
