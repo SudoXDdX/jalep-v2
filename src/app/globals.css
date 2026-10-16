@@ -1049,28 +1049,35 @@ html[data-mode] {
    ═══════════════════════════════════════════ */
 
 .glass-card {
-  background: var(--color-card); border: 1px solid var(--color-border);
+  /* JALEP 3.1: glass TRANSLÚCIDO de verdade — fundo rgba 62% deixa os blobs
+     do wallpaper aparecerem borrados através do card; saturate(1.5) intensifica. */
+  background: color-mix(in srgb, var(--color-card) 62%, transparent);
+  border: 1px solid rgba(255,255,255,0.10);
   border-radius: var(--radius);
-  /* JALEP 3.0: glass profundo — blur 20px, saturate 1.4, sombra 3-layer (ambient+mid+key) */
-  backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.18), 0 12px 32px rgba(0,0,0,0.22);
+  backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.18), 0 12px 32px rgba(0,0,0,0.22),
+              inset 0 1px 0 rgba(255,255,255,0.06);
   transition: background var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
               border-color var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
               box-shadow var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft));
 }
 .glass-card:hover {
-  border-color: var(--color-border-hover);
+  background: color-mix(in srgb, var(--color-card) 74%, transparent);
+  border-color: rgba(255,255,255,0.16);
   box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 6px 16px rgba(0,0,0,0.2),
               0 16px 40px rgba(0,0,0,0.26),
-              0 0 24px color-mix(in srgb, var(--color-primary) 10%, transparent);
+              0 0 28px color-mix(in srgb, var(--color-primary) 12%, transparent),
+              inset 0 1px 0 rgba(255,255,255,0.10);
 }
 
 .neon-card {
-  position: relative; background: var(--color-card);
-  border: 1px solid var(--color-border); border-radius: var(--radius);
-  /* JALEP 3.0: glass profundo igual glass-card */
-  backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.18), 0 12px 32px rgba(0,0,0,0.22);
+  position: relative;
+  /* JALEP 3.1: translúcido igual glass-card */
+  background: color-mix(in srgb, var(--color-card) 62%, transparent);
+  border: 1px solid rgba(255,255,255,0.10); border-radius: var(--radius);
+  backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.18), 0 12px 32px rgba(0,0,0,0.22),
+              inset 0 1px 0 rgba(255,255,255,0.06);
   padding: 1.5rem; overflow: hidden;
   transition: border-color var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
               box-shadow var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
@@ -1148,9 +1155,16 @@ html[data-mode] {
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
 .stat-card {
-  background: var(--color-card); border: 1px solid var(--color-border);
+  /* JALEP 3.1: translúcido + blur igual glass-card */
+  background: color-mix(in srgb, var(--color-card) 62%, transparent);
+  border: 1px solid rgba(255,255,255,0.10);
   border-radius: var(--radius); padding: 1rem 1.25rem;
-  transition: border-color var(--dur-s2) var(--spring-soft), box-shadow var(--dur-s2) var(--spring-soft), transform var(--dur-s2) var(--spring-soft);
+  backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.18), 0 12px 32px rgba(0,0,0,0.22),
+              inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: border-color var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
+              box-shadow var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft)),
+              transform var(--duration-slow, 400ms) var(--ease-smooth-out, var(--spring-soft));
 }
 .stat-card:hover { border-color: var(--color-primary-border); box-shadow: 0 0 20px color-mix(in srgb, var(--color-primary) 6%, transparent); transform: translateY(-2px); }
 
