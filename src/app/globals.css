@@ -1381,7 +1381,7 @@ html[data-mode] {
 
 /* Tabs */
 .tabs-list { display: flex; gap: 0; border-bottom: 1px solid var(--color-border); margin-bottom: 1rem; }
-.tab-trigger { padding: 0.75rem 1.5rem; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; color: var(--color-text-sec); font-family: var(--font-mono); font-size: 0.8rem; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.05em; }
+.tab-trigger { padding: 0.75rem 1.5rem; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; color: var(--color-text-sec); font-family: var(--font-mono); font-size: 0.8rem; transition: transform, opacity 0.2s; text-transform: uppercase; letter-spacing: 0.05em; }
 .tab-trigger:hover { color: var(--color-text); }
 .tab-trigger.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
 .tab-content { animation: tabFadeIn 0.3s ease; }
@@ -1396,7 +1396,7 @@ html[data-mode] {
 /* Carousel */
 .carousel-container { overflow: hidden; position: relative; }
 .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-.carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-text-muted); border: none; cursor: pointer; transition: all 0.2s; padding: 0; }
+.carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-text-muted); border: none; cursor: pointer; transition: transform, opacity 0.2s; padding: 0; }
 .carousel-dot.active { background: var(--color-primary); transform: scale(1.3); box-shadow: 0 0 6px var(--color-primary); }
 
 /* Modal */
@@ -1418,7 +1418,7 @@ html[data-mode] {
 
 /* Stepper */
 .stepper-step { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
-.stepper-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; border: 2px solid var(--color-border); background: var(--color-card); color: var(--color-text-muted); transition: all 0.3s; z-index: 1; }
+.stepper-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; border: 2px solid var(--color-border); background: var(--color-card); color: var(--color-text-muted); transition: transform, opacity 0.3s; z-index: 1; }
 .stepper-dot.completed { border-color: var(--color-primary); background: var(--color-primary-dim); color: var(--color-primary); }
 .stepper-dot.current { border-color: var(--color-primary); background: var(--color-primary); color: var(--color-bg); box-shadow: 0 0 12px var(--color-primary-dim); }
 
@@ -1442,7 +1442,7 @@ html[data-mode] {
 .avatar { display: flex; align-items: center; justify-content: center; border-radius: 50%; font-family: var(--font-heading); font-weight: 700; color: white; flex-shrink: 0; }
 
 /* TagCloud */
-.tag-cloud-item { display: inline-flex; padding: 0.35rem 0.75rem; border-radius: var(--radius); background: var(--color-primary-dim); color: var(--color-primary); font-family: var(--font-mono); font-size: 0.75rem; transition: all 0.2s; cursor: default; border: 1px solid var(--color-primary-border); }
+.tag-cloud-item { display: inline-flex; padding: 0.35rem 0.75rem; border-radius: var(--radius); background: var(--color-primary-dim); color: var(--color-primary); font-family: var(--font-mono); font-size: 0.75rem; transition: transform, opacity 0.2s; cursor: default; border: 1px solid var(--color-primary-border); }
 .tag-cloud-item:hover { transform: scale(1.08); background: var(--color-primary); color: var(--color-bg); }
 
 /* ParticleField */
@@ -1486,7 +1486,7 @@ html[data-mode] {
 .parallax-section { position: relative; overflow: hidden; }
 
 /* NeonButton */
-.neon-btn { position: relative; padding: 0.75rem 1.5rem; border-radius: var(--radius); font-family: var(--font-heading); font-weight: 700; font-size: 0.85rem; border: 1px solid; cursor: pointer; transition: all 0.3s; overflow: hidden; }
+.neon-btn { position: relative; padding: 0.75rem 1.5rem; border-radius: var(--radius); font-family: var(--font-heading); font-weight: 700; font-size: 0.85rem; border: 1px solid; cursor: pointer; transition: transform, opacity 0.3s; overflow: hidden; }
 .neon-btn-primary { color: var(--color-primary); border-color: var(--color-primary-border); background: var(--color-primary-dim); box-shadow: 0 0 15px rgba(130,177,255,0.15), inset 0 0 15px rgba(130,177,255,0.05); }
 .neon-btn-primary:hover { box-shadow: 0 0 25px rgba(130,177,255,0.3), inset 0 0 25px rgba(130,177,255,0.1); background: rgba(130,177,255,0.2); }
 .neon-btn-cyan { color: var(--color-cyan); border-color: rgba(24,255,255,0.28); background: rgba(24,255,255,0.08); box-shadow: 0 0 15px rgba(24,255,255,0.15); }
@@ -1504,7 +1504,7 @@ html[data-mode] {
 
 /* DockBar */
 .dock-bar { display: flex; align-items: flex-end; gap: 0.25rem; padding: 0.5rem 1rem; border-radius: 999px; }
-.dock-item { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.5rem; border-radius: 12px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+.dock-item { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.5rem; border-radius: 12px; cursor: pointer; transition: transform, opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
 .dock-item:hover { transform: scale(1.3) translateY(-8px); }
 .dock-item:hover ~ .dock-item { transform: scale(1.15) translateY(-4px); }
 .dock-item:has(+ .dock-item:hover) { transform: scale(1.15) translateY(-4px); }
@@ -1634,7 +1634,7 @@ textarea.contact-input { resize: vertical; min-height: 120px; }
   padding: 0.5rem 0.75rem; border-radius: var(--radius);
   border: 1px solid var(--color-border); background: transparent;
   color: var(--color-text-sec); font-family: var(--font-mono); font-size: 0.75rem;
-  cursor: pointer; transition: all 0.15s ease;
+  cursor: pointer; transition: transform, opacity 0.15s ease;
 }
 .perf-toggle-btn:hover {
   background: var(--color-primary-dim); color: var(--color-text);
