@@ -30,8 +30,9 @@ export function Nav() {
   return (
     <header className={`nav-glass ${scrolled ? "scrolled" : ""}`}>
       <div className="nav-glass-inner">
-        <Link href="/" className="flex items-center gap-1.5 text-sm font-semibold tracking-tight text-[var(--color-text)] transition-colors hover:text-[var(--color-primary)]">
-          <span className="material-symbols-outlined icon-primary" style={{ fontSize: 20 }}>terminal</span>
+        <Link href="/" className="nav-logo flex items-center gap-2 text-sm font-semibold tracking-tight text-[var(--color-text)] transition-colors hover:text-[var(--color-primary)]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/LOGOV2.png" alt="Logo JALEP" className="nav-logo-img" width={88} height={49} />
           <span className="font-mono text-xs">jalep<span className="text-[var(--color-primary)]">{'//'}</span></span>
         </Link>
 
