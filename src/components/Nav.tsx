@@ -28,6 +28,8 @@ export function Nav() {
   }, [menuOpen]);
 
   return (
+    <>
+    <div className="nav-scroll-edge" aria-hidden="true" />
     <header className={`nav-glass ${scrolled ? "scrolled" : ""}`}>
       <div className="nav-glass-inner">
         <Link href="/" className="nav-logo flex items-center gap-2 text-sm font-semibold tracking-tight text-[var(--color-text)] transition-colors hover:text-[var(--color-primary)]">
@@ -75,5 +77,6 @@ export function Nav() {
         </details>
       </div>
     </header>
+    </>
   );
 }

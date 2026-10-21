@@ -1828,3 +1828,21 @@ textarea.contact-input { resize: vertical; min-height: 120px; }
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+
+/* -- v4.1: nav logo -- */
+.nav-logo-img {
+  height: 30px;
+  width: auto;
+  display: block;
+  border-radius: 4px;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+  transition: filter var(--duration-slow, 400ms) ease, transform var(--duration-slow, 400ms) var(--spring-soft, ease);
+}
+.nav-logo:hover .nav-logo-img {
+  filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--color-primary) 35%, rgba(0,0,0,0.5)));
+  transform: translateY(-1px);
+}
+@media (max-width: 640px) {
+  .nav-logo-img { height: 24px; }
+  .nav-logo span { display: none; }  /* logo solo no mobile */
+}
